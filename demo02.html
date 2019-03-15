@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo02</title>
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+    <script src="./jQuery-js/jquery-3.1.0.js"></script>
+    <Script>
+        console.log($);
+        console.log(jQuery);
+        $(document).ready(function () {
+            $("#btn1").click(function () {
+                $("#state").find("option").removeAttr("selected");
+                $("#state").find("option[value='VA']").attr("selected", true);
+            });
+            $("#btn2").click(function () {
+                $("#state").find("option:contains('Maryland')").attr("selected", true);
+            });
+            var log = console.log;
+            $("#btn3").click(function () {
+                log($("ul li:first"));
+                log($("ul li:last"))
+                log($("ul li:odd"))
+                log($("ul li:even"))
+                log($("ul li:nth-child(2)"))
+                log($("ul li:nth-child(2n)"))
+                log($("div.container div:nth-of-type(2)"));// all the div and find the 2rd
+
+            })
+            $("#btn4").click(function () {
+                var $ul = $("ul#items");
+                $ul.append("<li>EJB</li>")
+                $("<li>jQuery</li>").appendTo($ul);//
+            });
+            $("#btn5").click(function () {
+                var $ul = $("ul#items");
+                $ul.prepend("<li>JavaScript</li>")
+                $("<li>Angular</li>").prependTo($ul);
+            })
+            $("#btn6").click(function () {
+                $("ul li").eq(2).after("<li>CSS</li>")
+                $("<li>HTML</li>").insertAfter($("ul li").eq(2))
+            });
+            $("#btn7").click(function () {
+                $("ol").remove();
+            })
+            $("ol").click(function () {
+                $("ol").css('color', 'red')
+            })
+            var temp;
+            $("#btn8").click(function () {
+                if (!temp) {
+                    $(this).text("Put back");
+                    temp = $("ol").detach();
+
+                }
+                else {
+                    $(this).text("Detach")
+                    $("#mydiv").append(temp);
+                    temp = null;//// zhongyao
+                }
+            })
+            $("#btn9").click(function () {
+                $("ol").empty();
+            })
+        })
+        function load() {
+            console.log("Executed when dom and resources are loaded")
+        }
+    </Script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Advanced Selector</h1>
+        <hr>
+        <p>
+            <select name="" id="state">
+                <option value=""></option>
+                <option value="NJ" selected>New Jersey</option>
+                <option value="Mo">Marylands</option>
+                <option value="VA">Virginia</option>
+                <option value="NC">North Carolina</option>
+            </select>
+        </p>
+        <button id="btn1" class="btn btn-warning">Select by Value</button>
+        <button id="btn2" class="btn btn-warning">Select by Display Value</button>
+
+    </div>
+    <hr>
+    <div>
+        <h2>Selector Collecation</h2>
+        <ul id="items">
+            <li>Java</li>
+            <li>Java EE</li>
+            <li>Spring</li>
+            <li>Hibermate</li>
+            <li>Struts</li>
+        </ul>
+        <div>
+            <button id="btn3" class="btn btn-primary">Selected</button>
+            <button id="btn4" class="btn btn-primary">Append</button>
+            <button id="btn5" class="btn btn-primary">Prepend</button>
+            <button id="btn6" class="btn btn-primary">Insert</button>
+        </div>
+        <hr>
+        <div id="mydiv">
+            <ol>
+                <li>Item1</li>
+                <li>Item2</li>
+                <li>Item3</li>
+            </ol>
+        </div>
+        <div>
+            <button id="btn7" class="btn btn-default">Remove</button>
+            <button id="btn8" class="btn btn-default">Detach</button>
+            <button id="btn9" class="btn btn-default">Empty</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+    <script src="./jQuery-js/jquery-3.1.0.js"></script>
+    <script>
+        console.log($);
+        console.log(jQuery);
+        $(document).ready(function () {
+            console.log("DOM elements are loaded")
+            console.log(document.getElementById("x"))
+
+            $("#btn1").click(function () {
+                console.log("#x").text();  //#: id selector . class selector
+                console.log("div.y").text();
+                console.log("h4").text();
+                console.log($('a[href="http://www.google.com"]')); //attribute selector
+                console.log($('a[href="google"]'))
+                console.log($('a[href$=".com"]'))//结尾"$""
+                console.log($('a[href^="http"]'))//开始"^""
+                console.log($("div.container h4"))
+                console.log($("div.container > h4 "))
+                console.log($("div.container, h4"))
+            });
+            $("#btn2").click(function () {
+                $("#x").text("<b>first paragraph is changed</b>");
+                $("p.y").html("<b>Secdond parargraph is changed</b>");
+                console.log($("#x").text());
+                console.log($("p.y").html());
+                $("h4").addClass("highlight");
+            })
+            $("#btn3").click(function () {
+                console.log("href: ", $("a").attr("href"));
+                console.log("target: ", $("a").attr("target"));
+                console.log("data-foo: ", $("a").attr("data-foo"));
+                console.log("href by prop", $("a").prop("href"))
+                console.log("")
+                console.log("")
+                console.log("")
+                console.log("")
+            })
+            $("#btn4").click(function () {
+                var $a = $("a");
+                $a.attr("href", "http://www.baidu.com");
+                $a.text("Baidu");
+                var aStyle = {
+                    color: "red",
+                    fontSize: "20pt"
+                };
+                $a.css(aStyle);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 onclick="alert('h1 is clicked')"> jQuery selector</h1>
+        <hr>
+        <h2>Basic selector</h2>
+        <p id="x">First paragraph</p>
+        <p class="y">Second parapraph</p>
+        <div class="y">Another Second Parapraph</div>
+        <h4>This is h4 tags</h4>
+        <div>
+            <button class="btn btn-primary" id="btn1">Select</button>
+            <button class="btn btn-primary" id="btn2">Update</button>
+        </div>
+        <hr>
+        <h2>Select Attribute</h2>
+        <p><a href="http://www.google.com" target="_blank" data-foo="bar">
+                google</a></p>
+        <div>
+            <button class="btn btn-primary" id="btn3">Read Link</button>
+            <button class="btn btn-primary" id="btn4">Update Link</button>
+            <h4>This is a h4 tag in div</h4>
+        </div>
+    </div>
+</body>
+
+</html>

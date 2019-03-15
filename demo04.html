@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+    <script src="./jQuery-js/jquery-3.1.0.js"></script>
+</head>
+<script>/// 3种办法不显示 1.css.display none 2. visiable: hidden. 3. opacity: 0;
+    $(document).ready(function () {
+        $("#btn1").click(function () {
+            $("#first").hide(1000, function () {
+                console.log("first para is hidden");
+                $("#last").hide(500, function () {
+                    console.log("Second para is hidden");
+                })
+            })
+        })
+        $("#btn2").click(function () {
+            $.when($("#first").show(1000))
+                .then(function () {
+                    console.log("first para is displayed");
+                    return $.when($("#last").show(500));
+                })
+                .then(function () {
+                    console.log("last para is displayed");
+
+                })
+        })              // then wati the previous then finished
+        $("#btn3").click(function () {
+            $.when(
+                $("#first").hide(1000),
+                $("#last").hide(500)
+            ).then(function () {
+                console.log("Both pare are hidden.")
+            })
+        })
+        $("#btn4").on("click", function () {
+            var deferred = $.Deferred();
+            $.when(
+                $("#first").show(1000),
+                $("#last").show(500)
+            ).then(function () {
+                deferred.resolve("Both para are displayed");
+            })
+            deferred.done(function (data) {
+                console.log(data);
+            })
+        })
+    })
+    // http post put get delete
+    $(document).ready(function () {
+        $("#call").click(function (event) {
+            event.preventDefault();
+
+            // optione 1
+            $.ajax();
+            $.ajax({
+                url: "/cal/add/" + $("#x").val() + "/" + $("#y").val
+            })
+
+            //option 2
+            var url = "/cal/add/" + $("#x").val() + "/" + $("$y").val();
+            $.get(url).then(function (res) {
+                console.log(res);
+                var r = res;
+                var url2 = "/cal/multiple/" + $("#x").val() + "/" + $("#y").val();
+                $.get(url2).then(function (res) {
+                    $("#result").text(r / res);
+                })
+
+            })
+        })
+    })
+</script>
+
+<body>
+    <div class="container">
+        <h1>jQuery Promise</h1>
+        <hr>
+        <p id="first">This is the first paragraph</p>
+        <p id="last">This is the second paragarph</p>
+        <div>
+            <button id="btn1" class="btn btn-primary">Hide</button>
+            <button id="btn2" class="btn btn-primary">Show</button>
+            <button id="btn3" class="btn btn-primary">Hide Two</button>
+            <button id="btn4" class="btn btn-primary">Show Two</button>
+        </div>
+        <hr>
+        <h2>Jquery Ajax</h2>
+        <form action="" class="col-sm-6">
+            <div class="form-group">
+                <label for="x">Input x</label>
+                <input type="number" name="x" class="form-control" id="x" placeholder="5" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label for="y">Inout Y</label>
+                <Input type="number" name="y" class="form-control" id="y" placeholder="5" min="1" max="100"></Input>
+            </div>
+            <div>
+                <button id="cal1" type="submit" class="btn btn-group">Calculate1</button>
+                <button id="cal2" type="submit" class="btn btn-group">Calculate2</button>
+                <button id="cal3" type="submit" class="btn btn-group">Calculate3</button>
+            </div>
+            <h3>Result: <span id="result"></span></h3>
+        </form>
+    </div>
+</body>
+
+</html>

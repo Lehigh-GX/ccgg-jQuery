@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DemoHTML-jQuery</title>
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+    <script src="./jQuery-js/jquery-3.1.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            function display(event) {
+                console.log("Phase: " + event.eventPhase);
+                console.log("Target: " + event.target.id);
+                console.log("Current Target: " + event.currentTarget.id);
+            }
+            // $("#inner").click(function (e) {
+            //     display(e);
+            //     console.log("upper");
+            //     e.stopPropagation();
+            //     e.stopImmediatePropagation();
+            //     return false;
+            // })
+            // $("#outer").click(function (e) {
+            //     display(e);
+            // })
+
+            $("#outer")[0].addEventListener("click", function (e) {
+                display(e);
+            }, true)  /// no ture will affect the result from 2-3 to 1-2
+
+            $("#inner").click(function (e) {
+                display(e);
+                console.log("upper")
+            });
+            $("#btn").on("click", function () {
+                $("#para").trigger("updateRequest", [1, 2])
+            })
+            $("#para").on("updateRequest", function (event, num1, num2) {
+                console.log(event);
+                $(this).text("Para is changed");
+                $(event.target).css("color", "red");
+                $(event.currentTarget).css({
+                    padding: "10px",
+                    margin: "10px"
+                })
+            })
+
+
+            //两种写法
+            document.getElementById("para").addEventListener("updateRequest", function () {
+                this.style.color = "red";
+                this.innerHTML = "Para is changed";
+            })
+            document.getElementById("btn").addEventListener("click", function () {
+                var event = new Event("updateRequest");
+                document.getElementById("para").dispatchEvent(event);
+            })
+            $("#compare").on("click", function () {
+                var $h4 = $("h4");
+                console.log($h4.length);
+                var $first = $h4.eq(0);////重要
+                console.log($first.text())
+                console.log($first[0]);
+                console.log($first);
+                console.log($first[1]);
+                console.log($first.length);
+                var second = $h4[1];
+                console.log(second.innerHTML);
+                console.log($(second));
+                var third = $h4.get(2);
+                console.log(third.innerHTML);
+                console.log(third === $h4[2]);
+                console.log($(third) == $h4.eq(2));
+
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Event propagation</h1>
+        <hr>
+        <div id="outer" style="width:300px; height:300px; border:solid 2px black; padding: 50px;">
+            <button id="inner" class="btn btn-primary">Click me</button>
+        </div>
+        <hr>
+        <h2>Custom Event</h2>
+        <p id="para"> This is a paragraph</p>
+        <button id="btn" class="btn btn-primary">Update</button>
+        <hr>
+        <h2>Differernt Between jQuery obejct and DOM object</h2>
+        <h4>First</h4>
+        <h4>Second</h4>
+        <h4>Third</h4>
+        <button id="compare" class="btn btn-primary">Compare</button>
+
+    </div>
+</body>
+
+</html>
